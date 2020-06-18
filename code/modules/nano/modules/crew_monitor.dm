@@ -1,5 +1,6 @@
 /datum/nano_module/crew_monitor
 	name = "Crew monitor"
+	var/command = FALSE
 
 /datum/nano_module/crew_monitor/Topic(href, href_list)
 	if(..())
@@ -36,6 +37,9 @@
 	var/turf/T = get_turf(nano_host())
 
 	data["isAI"] = isAI(user)
-	data["crewmembers"] = GLOB.crew_repository.health_data(T)
+	if(command)
+		data["crewmembers"] = GLOB.command_repository.health_data(T)
+	else
+		data["crewmembers"] = GLOB.crew_repository.health_data(T)
 
 	return data
