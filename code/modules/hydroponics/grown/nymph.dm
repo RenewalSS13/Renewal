@@ -24,3 +24,14 @@
 	to_chat(user, "<span class='notice'>You crack open [src] letting the nymph out.</span>")
 	user.drop_item()
 	qdel(src)
+
+// The seed granted to a diona at round start.
+/obj/item/seeds/nymph/diona_innate
+	desc = "A single seed produced by a small diona gestalt. It can typically only grow one nymph."
+	name = "diona nymph seed"
+
+// The Diona's innate pod will not yield more than one nymph at harvest and perennial growth cannot be added (see plant_genes.dm).
+// A seed extractor can possibly make more, but if the player is in a position to do that they can just get the nymph seeds from the vendor anyway.
+/obj/item/seeds/nymph/diona_innate/getYield()
+	return 1
+

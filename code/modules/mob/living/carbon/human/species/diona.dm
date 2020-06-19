@@ -13,13 +13,14 @@
 	heatmod = 1.5
 	var/pod = FALSE //did they come from a pod? If so, they're stronger than normal Diona.
 
-	blurb = "Commonly referred to (erroneously) as 'plant people', the Dionaea are a strange space-dwelling collective \
-	species hailing from Epsilon Ursae Minoris. Each 'diona' is a cluster of numerous cat-sized organisms called nymphs; \
-	there is no effective upper limit to the number that can fuse in gestalt, and reports exist	of the Epsilon Ursae \
-	Minoris primary being ringed with a cloud of singing space-station-sized entities.<br/><br/>The Dionaea coexist peacefully with \
-	all known species, especially the Skrell. Their communal mind makes them slow to react, and they have difficulty understanding \
-	even the simplest concepts of other minds. Their alien physiology allows them survive happily off a diet of nothing but light, \
-	water and other radiation."
+
+	blurb = "Commonly referred to (erroneously) as 'plant people', the Dionaea are a strange collective species hailing from Epsilon Ursae \
+	Minoris. Each 'diona' is a cluster of numerous cat-sized organisms called nymphs; there is no effective upper limit to the \
+	number that can fuse in gestalt, and reports exist	of the Epsilon Ursae Minoris primary being ringed with a cloud of singing \
+	space-station-sized entities.<br/><br/> The Dionaea coexist peacefully with all known species, especially the Skrell. Due to their communal mind they have difficulty \
+	understanding even the simplest concepts of other minds. Their alien physiology allows them to survive happily off a diet of \
+	nothing but light after their initial growth cycles have passed. They are capable of reproducing themselves under the correct \
+	growing conditions, provided water and nutrients are available."
 
 	species_traits = list(IS_PLANT, NO_GERMS, NO_DECAY)
 	clothing_flags = HAS_SOCKS
@@ -70,15 +71,23 @@
 		return 1
 	return 0
 
+/datum/species/diona/after_equip_job(datum/job/J, mob/living/carbon/human/H)
+	var/obj/item/seeds/nymph/diona_innate/seedpod = new 
+	seedpod.name = "\improper Diona Seed Pod ([H])"
+	H.equip_or_collect(seedpod)
+	to_chat(H, "<span class='notice'>You carry with you a seed pod made by your gestalt. Planting it somewhere will cause it to grow into a nymph, with proper care, though it will not be subservient to you.</span>")
+
 /datum/species/diona/on_species_gain(mob/living/carbon/human/H)
 	..()
 	H.gender = NEUTER
+
 
 /datum/species/diona/handle_reagents(mob/living/carbon/human/H, datum/reagent/R)
 	if(R.id == "glyphosate" || R.id == "atrazine")
 		H.adjustToxLoss(3) //Deal aditional damage
 		return TRUE
 	return ..()
+
 
 /datum/species/diona/handle_life(mob/living/carbon/human/H)
 	if(H.stat == DEAD)
