@@ -1,5 +1,6 @@
 /datum/tgui_module/crew_monitor
 	name = "Crew monitor"
+	var/command = FALSE
 
 /datum/tgui_module/crew_monitor/tgui_act(action, params)
 	if(..())
@@ -34,6 +35,10 @@
 	var/turf/T = get_turf(tgui_host())
 
 	data["isAI"] = isAI(user)
-	data["crewmembers"] = GLOB.crew_repository.health_data(T)
+
+	if(command)
+		data["crewmembers"] = GLOB.command_repository.health_data(T)
+	else
+		data["crewmembers"] = GLOB.crew_repository.health_data(T)
 
 	return data
